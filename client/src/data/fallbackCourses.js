@@ -1,0 +1,158 @@
+export const DEFAULT_SAMPLE_COURSES = [
+  {
+    id: 'pharm-001',
+    title: 'Pharmacocinétique Clinique : Modèles Compartimentaux & Biodisponibilité',
+    subject: 'Pharmacologie',
+    year: '3ème Année',
+    semester: 'Semestre 5',
+    type: 'pdf',
+    chapter: 'Chapitre 1 - Principes Généraux de Pharmacologie',
+    teacher: 'Pr. A. Benali',
+    description: 'Étude approfondie de l\'absorption, distribution, métabolisme hépatique (Cytochromes P450) et élimination rénale des principes actifs. Calculs de clairance et volume de distribution.',
+    tags: ['Pharmacocinétique', 'Clairance', 'CYP450', 'Biodisponibilité', 'Examen S5'],
+    fileName: 'sample_pharmacocinetique.pdf',
+    fileSize: 2450000,
+    createdAt: new Date(Date.now() - 5 * 24 * 3600 * 1000).toISOString(),
+    views: 42,
+    isFavorite: true,
+    notes: 'Formules clés à mémoriser pour l\'épreuve : Vd = Dose / C0 et Cl = D / AUC. Attention aux inducteurs et inhibiteurs enzymatiques.'
+  },
+  {
+    id: 'pharm-002',
+    title: 'Formes Galéniques Solides : Formulation & Contrôle des Comprimés',
+    subject: 'Pharmacie Galénique',
+    year: '3ème Année',
+    semester: 'Semestre 6',
+    type: 'powerpoint',
+    chapter: 'Chapitre 3 - Technologie Pharmaceutique des Formes Solides',
+    teacher: 'Dr. C. Dumont',
+    description: 'Diaporama complet sur la compression directe, granulation humide et sèche, excipients liants/délitants, et essais pharmacotechniques (délitement, dissolution, friabilité).',
+    tags: ['Galénique', 'Comprimés', 'Granulation', 'Excipients', 'Pharmacopée'],
+    fileName: 'sample_formes_solides.pptx',
+    fileSize: 6840000,
+    createdAt: new Date(Date.now() - 9 * 24 * 3600 * 1000).toISOString(),
+    views: 31,
+    isFavorite: false,
+    notes: 'Schémas des poinçons et matrice de presse rotative. Savoir différencier les enrobages gastro-résistants et à libération prolongée (LP).'
+  },
+  {
+    id: 'pharm-003',
+    title: 'Mécanismes d\'Action des Antibiotiques & Antibiogramme',
+    subject: 'Bactériologie & Thérapeutique',
+    year: '4ème Année',
+    semester: 'Semestre 7',
+    type: 'video',
+    chapter: 'Module Infectiologie & Antibiothérapie',
+    teacher: 'Pr. E. Leroy',
+    description: 'Cours vidéo masterclass : Cibles bactériennes (paroi, ribosomes, ADN gyrase), mécanismes de résistance aux bêtalactamines (carbapénèmases, BLSE) et lecture interprétative de l\'antibiogramme.',
+    tags: ['Antibiotiques', 'Bétalactamines', 'Résistance', 'Antibiogramme', 'Infectiologie'],
+    videoUrl: 'https://www.youtube.com/watch?v=0bA-3kLpQ8Q',
+    embedUrl: 'https://www.youtube.com/embed/0bA-3kLpQ8Q',
+    createdAt: new Date(Date.now() - 2 * 24 * 3600 * 1000).toISOString(),
+    views: 89,
+    isFavorite: true,
+    notes: 'Points cruciaux : Pénicillines inhibent les PLP (transpeptidases). Aminosides sur sous-unité 30S (néphro/ototoxicité). Macrolides sur 50S.'
+  },
+  {
+    id: 'pharm-004',
+    title: 'Chimie Thérapeutique des AINS & Corticoïdes',
+    subject: 'Chimie Thérapeutique',
+    year: '4ème Année',
+    semester: 'Semestre 8',
+    type: 'pdf',
+    chapter: 'Chapitre 4 - Anti-inflammatoires & Stéroïdes',
+    teacher: 'Pr. S. Martin',
+    description: 'Relations structure-activité (RSA) des dérivés de l\'acide salicylique, dérivés indoliques, profènes et coxibs sélectifs. Métabolisme et synthèse chimique des glucocorticoïdes.',
+    tags: ['AINS', 'ChimieMédicinale', 'COX-1', 'COX-2', 'RSA'],
+    fileName: 'sample_chimie_ains.pdf',
+    fileSize: 3120000,
+    createdAt: new Date(Date.now() - 14 * 24 * 3600 * 1000).toISOString(),
+    views: 57,
+    isFavorite: true,
+    notes: 'La pharmacophore anti-COX : groupement acide carboxylique interacteur avec Arg120. Poche hydrophobe spécifique de COX-2 exploitée par le célécoxib.'
+  },
+  {
+    id: 'pharm-005',
+    title: 'Botanique & Pharmacognosie : Alcaloïdes et Tanins Végétaux',
+    subject: 'Pharmacognosie',
+    year: '2ème Année',
+    semester: 'Semestre 4',
+    type: 'powerpoint',
+    chapter: 'Plantes Médicinales & Molécules Actives d\'Origine Végétale',
+    teacher: 'Dr. M. Riviere',
+    description: 'Diapositives richement illustrées sur les drogues à alcaloïdes (Opium, Quinquina, Belladone, If de Bourgogne / Taxotère). Voies de biosynthèse et extraction hydroalcoolique.',
+    tags: ['Plantes', 'Alcaloïdes', 'Pavot', 'Taxol', 'BotaniquePharmaceutique'],
+    fileName: 'sample_pharmacognosie_plantes.pptx',
+    fileSize: 11450000,
+    createdAt: new Date(Date.now() - 20 * 24 * 3600 * 1000).toISOString(),
+    views: 24,
+    isFavorite: false,
+    notes: 'Reconnaissance macroscopique des drogues et réactions de caractérisation (réactif de Mayer, Dragendorff, Bouchardat).'
+  },
+  {
+    id: 'pharm-006',
+    title: 'Toxicologie Médicale : Prise en Charge des Intoxications Aiguës & Antidotes',
+    subject: 'Toxicologie',
+    year: '5ème Année',
+    semester: 'Semestre 9',
+    type: 'video',
+    chapter: 'Module Urgences Médicales & Toxicologie Clinique',
+    teacher: 'Pr. V. Moreau',
+    description: 'Conférence interactive : Syndromes toxiques (anticholinergique, opioïde, sérotoninergique), intoxications au paracétamol (N-acétylcystéine), bêtabloquants (Glucagon) et monoxyde de carbone.',
+    tags: ['Toxicologie', 'Antidotes', 'Paracétamol', 'Toxidromes', 'Internat'],
+    videoUrl: 'https://www.youtube.com/watch?v=F_fP_H9J0yA',
+    embedUrl: 'https://www.youtube.com/embed/F_fP_H9J0yA',
+    createdAt: new Date(Date.now() - 1 * 24 * 3600 * 1000).toISOString(),
+    views: 112,
+    isFavorite: true,
+    notes: 'Protocole Rumack-Matthew pour le paracétamol. NAC efficace idéalement dans les 8 premières heures. Naloxone titrée en urgence.'
+  }
+];
+
+export const DEFAULT_SUBJECTS_LIST = [
+  { id: 'pharmacologie', name: 'Pharmacologie', icon: 'Pill', color: '#10b981' },
+  { id: 'galenique', name: 'Pharmacie Galénique', icon: 'FlaskConical', color: '#06b6d4' },
+  { id: 'chimie_therapeutique', name: 'Chimie Thérapeutique', icon: 'Atom', color: '#8b5cf6' },
+  { id: 'bacteriologie', name: 'Bactériologie & Virologie', icon: 'Bug', color: '#ec4899' },
+  { id: 'pharmacognosie', name: 'Pharmacognosie & Botanique', icon: 'Leaf', color: '#84cc16' },
+  { id: 'toxicologie', name: 'Toxicologie', icon: 'AlertTriangle', color: '#f59e0b' },
+  { id: 'biochimie', name: 'Biochimie Médicale', icon: 'Activity', color: '#3b82f6' },
+  { id: 'semiologie', name: 'Sémiologie & Pathologie', icon: 'Stethoscope', color: '#ef4444' },
+  { id: 'legislation', name: 'Législation & Déontologie', icon: 'Scale', color: '#64748b' },
+  { id: 'autres', name: 'Autres / Transversal', icon: 'Folder', color: '#14b8a6' }
+];
+
+export function computeStats(courses) {
+  const pdfCount = courses.filter((c) => c.type === 'pdf').length;
+  const pptCount = courses.filter((c) => c.type === 'powerpoint').length;
+  const videoCount = courses.filter((c) => c.type === 'video').length;
+  const totalViews = courses.reduce((acc, c) => acc + (c.views || 0), 0);
+  const favoriteCount = courses.filter((c) => c.isFavorite).length;
+
+  let totalBytes = 0;
+  courses.forEach((c) => {
+    if (c.fileSize) totalBytes += c.fileSize;
+  });
+
+  const subjectsCount = {};
+  courses.forEach((c) => {
+    subjectsCount[c.subject] = (subjectsCount[c.subject] || 0) + 1;
+  });
+
+  const yearsCount = {};
+  courses.forEach((c) => {
+    yearsCount[c.year] = (yearsCount[c.year] || 0) + 1;
+  });
+
+  return {
+    totalCourses: courses.length,
+    pdfCount,
+    pptCount,
+    videoCount,
+    totalViews,
+    favoriteCount,
+    totalStorageMb: (totalBytes / (1024 * 1024)).toFixed(1),
+    subjectsCount,
+    yearsCount
+  };
+}

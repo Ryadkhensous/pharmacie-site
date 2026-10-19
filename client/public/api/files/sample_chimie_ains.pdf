@@ -1,0 +1,64 @@
+%PDF-1.4
+1 0 obj
+<< /Title (Cours de Pharmacologie - Pharmacocinetique Clinique)
+   /Author (Faculte de Pharmacie)
+   /Type /Catalog
+   /Pages 2 0 R
+>>
+endobj
+2 0 obj
+<< /Type /Pages
+   /Kids [3 0 R]
+   /Count 1
+>>
+endobj
+3 0 obj
+<< /Type /Page
+   /Parent 2 0 R
+   /MediaBox [0 0 612 792]
+   /Contents 4 0 R
+   /Resources << /Font << /F1 5 0 R >> >>
+>>
+endobj
+4 0 obj
+<< /Length 215 >>
+stream
+BT
+/F1 22 Tf
+50 720 Td
+(PHARMACOLOGIE CLINIQUE & BIODISPONIBILITE) Tj
+/F1 14 Tf
+50 670 Td
+(Faculte des Sciences Pharmaceutiques - Annee Universitaire) Tj
+50 640 Td
+(1. Cinetique d'absorption et passage transmembranaire) Tj
+50 610 Td
+(2. Volume de distribution (Vd = Dose / C0)) Tj
+50 580 Td
+(3. Clairance renale et hepatique (Cytochromes P450)) Tj
+50 550 Td
+(4. Demi-vie d'elimination (t1/2 = 0.693 * Vd / Cl)) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font
+   /Subtype /Type1
+   /BaseFont /Helvetica-Bold
+>>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000120 00000 n 
+0000000177 00000 n 
+0000000301 00000 n 
+0000000570 00000 n 
+trailer
+<< /Size 6
+   /Root 1 0 R
+>>
+startxref
+647
+%%EOF
