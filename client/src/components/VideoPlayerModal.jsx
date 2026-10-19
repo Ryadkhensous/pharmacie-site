@@ -8,7 +8,7 @@ import {
   Minimize2, 
   FastForward, 
   BookOpen, 
-  Sparkles,
+  Sparkles, 
   Info
 } from 'lucide-react';
 import { useTranslation } from '../context/LanguageContext';
@@ -17,6 +17,7 @@ export default function VideoPlayerModal({ course, onClose }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [showNotes, setShowNotes] = useState(true);
+  const [mobileTab, setMobileTab] = useState('video'); // 'video' | 'notes'
   const videoRef = useRef(null);
   const { t, lang } = useTranslation();
 
@@ -55,14 +56,14 @@ export default function VideoPlayerModal({ course, onClose }) {
                 <span className="meta-sub-pill">{course.subject}</span>
                 <span>•</span>
                 <span>{course.year}</span>
-                {course.teacher && <span>• {course.teacher}</span>}
+                {course.teacher && <span className="hide-on-mobile">• {course.teacher}</span>}
               </div>
             </div>
           </div>
 
           <div className="modal-header-actions">
             <button 
-              className={`btn btn-secondary ${showNotes ? 'active-toggle' : ''}`}
+              className={`btn btn-secondary hide-on-mobile ${showNotes ? 'active-toggle' : ''}`}
               onClick={() => setShowNotes(!showNotes)}
               title={t('notesDrawer')}
             >
@@ -78,7 +79,7 @@ export default function VideoPlayerModal({ course, onClose }) {
                 title={t('cardDownload')}
               >
                 <Download size={16} />
-                <span>{t('cardDownload')}</span>
+                <span className="hide-on-mobile">{t('cardDownload')}</span>
               </a>
             )}
 
@@ -87,7 +88,7 @@ export default function VideoPlayerModal({ course, onClose }) {
                 href={course.videoUrl} 
                 target="_blank" 
                 rel="noreferrer" 
-                className="btn btn-secondary"
+                className="btn btn-secondary hide-on-mobile"
                 title={t('openNewTab')}
               >
                 <ExternalLink size={16} />
@@ -95,7 +96,7 @@ export default function VideoPlayerModal({ course, onClose }) {
             )}
 
             <button 
-              className="btn btn-secondary"
+              className="btn btn-secondary hide-on-mobile"
               onClick={toggleFullscreen}
               title={isFullscreen ? t('exitFullscreen') : t('fullscreen')}
             >
@@ -112,15 +113,35 @@ export default function VideoPlayerModal({ course, onClose }) {
           </div>
         </div>
 
+        {/* Mobile View Switcher Tabs (Only on mobile) */}
+        <div className="modal-mobile-tabs-bar">
+          <button
+            className={`mobile-tab-btn ${mobileTab === 'video' ? 'active' : ''}`}
+            onClick={() => setMobileTab('video')}
+          >
+            <Video size={16} />
+            <span>{lang === 'fr' ? 'Lecteur Vidéo' : 'Video Player'}</span>
+          </button>
+          <button
+            className={`mobile-tab-btn ${mobileTab === 'notes' ? 'active' : ''}`}
+            onClick={() => setMobileTab('notes')}
+          >
+            <BookOpen size={16} />
+            <span>{t('notesDrawer')}</span>
+            {course.notes && <span className="tab-dot"></span>}
+          </button>
+        </div>
+
         {/* Modal Body */}
-        <div className="modal-body video-body-layout">
+        <div className={`modal-body video-body-layout mobile-tab-${mobileTab}`}>
           {/* Main Video Area */}
-          <div className="video-player-container">
+          <div className={`video-player-container ${mobileTab === 'video' ? 'show-mobile' : 'hide-mobile'}`}>
             {isLocalVideo ? (
               <div className="local-video-wrapper">
                 <video
                   ref={videoRef}
                   controls
+                  playsInline
                   autoPlay
                   className="html5-video"
                   src={videoSourceUrl}
@@ -152,7 +173,7 @@ export default function VideoPlayerModal({ course, onClose }) {
                 <iframe
                   src={course.embedUrl}
                   title={course.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                   className="embed-video-iframe"
                 />
@@ -175,8 +196,8 @@ export default function VideoPlayerModal({ course, onClose }) {
           </div>
 
           {/* Notes Sidebar */}
-          {showNotes && (
-            <div className="video-notes-sidebar">
+          {(showNotes || mobileTab === 'notes') && (
+            <div className={`video-notes-sidebar ${mobileTab === 'notes' ? 'show-mobile' : 'hide-mobile'}`}>
               <div className="notes-sidebar-header">
                 <Sparkles size={16} className="text-primary" />
                 <h3>{t('videoNotesTitle')}</h3>

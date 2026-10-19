@@ -5,7 +5,6 @@ import {
   Maximize2, 
   Minimize2, 
   FileText, 
-  Printer, 
   ExternalLink,
   BookOpen,
   Sparkles,
@@ -16,7 +15,8 @@ import { useTranslation } from '../context/LanguageContext';
 export default function PdfViewerModal({ course, onClose }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showNotes, setShowNotes] = useState(true);
-  const { t } = useTranslation();
+  const [mobileTab, setMobileTab] = useState('doc'); // 'doc' | 'notes'
+  const { t, lang } = useTranslation();
 
   if (!course) return null;
 
@@ -50,13 +50,13 @@ export default function PdfViewerModal({ course, onClose }) {
                 {course.chapter && (
                   <>
                     <span>•</span>
-                    <span>{course.chapter}</span>
+                    <span className="hide-on-mobile">{course.chapter}</span>
                   </>
                 )}
                 {course.teacher && (
                   <>
                     <span>•</span>
-                    <span>{course.teacher}</span>
+                    <span className="hide-on-mobile">{course.teacher}</span>
                   </>
                 )}
               </div>
@@ -64,8 +64,9 @@ export default function PdfViewerModal({ course, onClose }) {
           </div>
 
           <div className="modal-header-actions">
+            {/* Desktop notes toggle */}
             <button 
-              className={`btn btn-secondary ${showNotes ? 'active-toggle' : ''}`}
+              className={`btn btn-secondary hide-on-mobile ${showNotes ? 'active-toggle' : ''}`}
               onClick={() => setShowNotes(!showNotes)}
               title={t('notesDrawer')}
             >
@@ -77,11 +78,11 @@ export default function PdfViewerModal({ course, onClose }) {
               <a 
                 href={fileUrl} 
                 download 
-                className="btn btn-secondary"
+                className="btn btn-secondary modal-action-btn"
                 title={t('cardDownload')}
               >
                 <Download size={16} />
-                <span>{t('cardDownload')}</span>
+                <span className="hide-on-mobile">{t('cardDownload')}</span>
               </a>
             )}
 
@@ -90,7 +91,7 @@ export default function PdfViewerModal({ course, onClose }) {
                 href={fileUrl} 
                 target="_blank" 
                 rel="noreferrer" 
-                className="btn btn-secondary"
+                className="btn btn-secondary hide-on-mobile"
                 title={t('openNewTab')}
               >
                 <ExternalLink size={16} />
@@ -98,7 +99,7 @@ export default function PdfViewerModal({ course, onClose }) {
             )}
 
             <button 
-              className="btn btn-secondary"
+              className="btn btn-secondary hide-on-mobile"
               onClick={toggleFullscreen}
               title={isFullscreen ? t('exitFullscreen') : t('fullscreen')}
             >
@@ -115,10 +116,29 @@ export default function PdfViewerModal({ course, onClose }) {
           </div>
         </div>
 
+        {/* Mobile View Switcher Tabs (Only visible on small screens) */}
+        <div className="modal-mobile-tabs-bar">
+          <button
+            className={`mobile-tab-btn ${mobileTab === 'doc' ? 'active' : ''}`}
+            onClick={() => setMobileTab('doc')}
+          >
+            <FileText size={16} />
+            <span>{lang === 'fr' ? 'Document PDF' : 'PDF Document'}</span>
+          </button>
+          <button
+            className={`mobile-tab-btn ${mobileTab === 'notes' ? 'active' : ''}`}
+            onClick={() => setMobileTab('notes')}
+          >
+            <BookOpen size={16} />
+            <span>{t('notesDrawer')}</span>
+            {course.notes && <span className="tab-dot"></span>}
+          </button>
+        </div>
+
         {/* Modal Body */}
-        <div className="modal-body pdf-body-layout">
+        <div className={`modal-body pdf-body-layout mobile-tab-${mobileTab}`}>
           {/* Main PDF Frame */}
-          <div className="pdf-frame-wrapper">
+          <div className={`pdf-frame-wrapper ${mobileTab === 'doc' ? 'show-mobile' : 'hide-mobile'}`}>
             {fileUrl ? (
               <iframe
                 src={`${fileUrl}#toolbar=1&navpanes=1`}
@@ -134,8 +154,8 @@ export default function PdfViewerModal({ course, onClose }) {
           </div>
 
           {/* Side Revision Notes Panel */}
-          {showNotes && (
-            <div className="pdf-notes-sidebar">
+          {(showNotes || mobileTab === 'notes') && (
+            <div className={`pdf-notes-sidebar ${mobileTab === 'notes' ? 'show-mobile' : 'hide-mobile'}`}>
               <div className="notes-sidebar-header">
                 <Sparkles size={16} className="text-primary" />
                 <h3>{t('pdfKeyNotesTitle')}</h3>

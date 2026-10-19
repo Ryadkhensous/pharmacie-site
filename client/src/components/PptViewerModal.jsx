@@ -6,12 +6,14 @@ import {
   ExternalLink, 
   Sparkles,
   Info,
+  BookOpen,
   CheckCircle2
 } from 'lucide-react';
 import { useTranslation } from '../context/LanguageContext';
 
 export default function PptViewerModal({ course, onClose }) {
   const [showNotes, setShowNotes] = useState(true);
+  const [mobileTab, setMobileTab] = useState('showcase'); // 'showcase' | 'notes'
   const { t, lang } = useTranslation();
 
   if (!course) return null;
@@ -44,7 +46,7 @@ export default function PptViewerModal({ course, onClose }) {
                 <span className="meta-sub-pill">{course.subject}</span>
                 <span>•</span>
                 <span>{course.year}</span>
-                {course.teacher && <span>• {course.teacher}</span>}
+                {course.teacher && <span className="hide-on-mobile">• {course.teacher}</span>}
               </div>
             </div>
           </div>
@@ -54,7 +56,7 @@ export default function PptViewerModal({ course, onClose }) {
               <a 
                 href={fileUrl} 
                 download 
-                className="btn btn-primary"
+                className="btn btn-primary hide-on-mobile"
                 title={t('cardDownload')}
               >
                 <Download size={16} />
@@ -72,13 +74,32 @@ export default function PptViewerModal({ course, onClose }) {
           </div>
         </div>
 
+        {/* Mobile View Switcher Tabs (Only on small screens) */}
+        <div className="modal-mobile-tabs-bar">
+          <button
+            className={`mobile-tab-btn ${mobileTab === 'showcase' ? 'active' : ''}`}
+            onClick={() => setMobileTab('showcase')}
+          >
+            <Presentation size={16} />
+            <span>PowerPoint</span>
+          </button>
+          <button
+            className={`mobile-tab-btn ${mobileTab === 'notes' ? 'active' : ''}`}
+            onClick={() => setMobileTab('notes')}
+          >
+            <BookOpen size={16} />
+            <span>{t('notesDrawer')}</span>
+            {course.notes && <span className="tab-dot"></span>}
+          </button>
+        </div>
+
         {/* Body */}
-        <div className="modal-body ppt-body-layout">
+        <div className={`modal-body ppt-body-layout mobile-tab-${mobileTab}`}>
           {/* Main Visual Presentation Card */}
-          <div className="ppt-presentation-showcase">
+          <div className={`ppt-presentation-showcase ${mobileTab === 'showcase' ? 'show-mobile' : 'hide-mobile'}`}>
             <div className="ppt-banner-preview">
               <div className="ppt-icon-circle">
-                <Presentation size={56} />
+                <Presentation size={48} />
               </div>
               <h3 className="ppt-hero-title">{course.title}</h3>
               <p className="ppt-hero-sub">{t('pptHeroSub')} • {course.subject} ({course.year})</p>
@@ -100,15 +121,15 @@ export default function PptViewerModal({ course, onClose }) {
 
               {fileUrl && (
                 <div className="ppt-actions-bar">
-                  <a href={fileUrl} download className="btn btn-primary btn-lg">
+                  <a href={fileUrl} download className="btn btn-primary btn-lg full-on-mobile">
                     <Download size={18} />
-                    <span>{t('pptDownloadBtn')}</span>
+                    <span>{t('pptDownloadBtn')} ({formatFileSize(course.fileSize)})</span>
                   </a>
                   <a 
                     href={`https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(window.location.origin + fileUrl)}`}
                     target="_blank" 
                     rel="noreferrer"
-                    className="btn btn-secondary btn-lg"
+                    className="btn btn-secondary btn-lg full-on-mobile"
                   >
                     <ExternalLink size={18} />
                     <span>{t('pptOfficePreview')}</span>
@@ -119,51 +140,53 @@ export default function PptViewerModal({ course, onClose }) {
           </div>
 
           {/* Notes Sidebar */}
-          <div className="ppt-notes-sidebar">
-            <div className="notes-sidebar-header">
-              <Sparkles size={16} className="text-primary" />
-              <h3>{t('pptPlanTitle')}</h3>
-            </div>
+          {(showNotes || mobileTab === 'notes') && (
+            <div className={`ppt-notes-sidebar ${mobileTab === 'notes' ? 'show-mobile' : 'hide-mobile'}`}>
+              <div className="notes-sidebar-header">
+                <Sparkles size={16} className="text-primary" />
+                <h3>{t('pptPlanTitle')}</h3>
+              </div>
 
-            <div className="notes-sidebar-content">
-              {course.notes ? (
-                <div className="notes-memo-box">
-                  <h4>{t('pdfKeyPoints')}</h4>
-                  <p>{course.notes}</p>
-                </div>
-              ) : (
-                <div className="empty-notes-hint">
-                  <Info size={16} />
-                  <p>{lang === 'fr' ? 'Aucune note enregistrée pour ce diaporama.' : 'No notes recorded for this slide deck.'}</p>
-                </div>
-              )}
-
-              {course.chapter && (
-                <div className="notes-section">
-                  <h4>{t('fieldChapter')}</h4>
-                  <p>{course.chapter}</p>
-                </div>
-              )}
-
-              {course.description && (
-                <div className="notes-section">
-                  <h4>{t('fieldDesc')}</h4>
-                  <p>{course.description}</p>
-                </div>
-              )}
-
-              {course.tags && course.tags.length > 0 && (
-                <div className="notes-section">
-                  <h4>{t('fieldTags')}</h4>
-                  <div className="notes-tags-list">
-                    {course.tags.map((tag, i) => (
-                      <span key={i} className="tag-pill">#{tag}</span>
-                    ))}
+              <div className="notes-sidebar-content">
+                {course.notes ? (
+                  <div className="notes-memo-box">
+                    <h4>{t('pdfKeyPoints')}</h4>
+                    <p>{course.notes}</p>
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div className="empty-notes-hint">
+                    <Info size={16} />
+                    <p>{lang === 'fr' ? 'Aucune note enregistrée pour ce diaporama.' : 'No notes recorded for this slide deck.'}</p>
+                  </div>
+                )}
+
+                {course.chapter && (
+                  <div className="notes-section">
+                    <h4>{t('fieldChapter')}</h4>
+                    <p>{course.chapter}</p>
+                  </div>
+                )}
+
+                {course.description && (
+                  <div className="notes-section">
+                    <h4>{t('fieldDesc')}</h4>
+                    <p>{course.description}</p>
+                  </div>
+                )}
+
+                {course.tags && course.tags.length > 0 && (
+                  <div className="notes-section">
+                    <h4>{t('fieldTags')}</h4>
+                    <div className="notes-tags-list">
+                      {course.tags.map((tag, i) => (
+                        <span key={i} className="tag-pill">#{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
