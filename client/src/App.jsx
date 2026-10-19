@@ -92,25 +92,29 @@ export default function App() {
         fetch('/api/subjects')
       ]);
 
-      if (coursesRes.ok) {
+      const isJson = (res) => {
+        const ct = res.headers.get('content-type');
+        return ct && ct.includes('application/json');
+      };
+
+      if (coursesRes.ok && isJson(coursesRes)) {
         const coursesData = await coursesRes.json();
         if (Array.isArray(coursesData) && coursesData.length > 0) {
           setCourses(coursesData);
         }
       }
-      if (statsRes.ok) {
+      if (statsRes.ok && isJson(statsRes)) {
         const statsData = await statsRes.json();
         setStats(statsData);
       } else {
         setStats(computeStats(courses));
       }
-      if (subjectsRes.ok) {
+      if (subjectsRes.ok && isJson(subjectsRes)) {
         const subjectsData = await subjectsRes.json();
         setSubjects(subjectsData);
       }
     } catch (err) {
-      console.warn('Backend indisponible ou mode prototype statique:', err);
-      // Fallback works automatically from state
+      console.warn('Mode prototype autonome (données locales synchronisées):', err);
       setStats(computeStats(courses));
     } finally {
       setLoading(false);

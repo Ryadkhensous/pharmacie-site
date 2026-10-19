@@ -154,7 +154,7 @@ export default function UploadCoursePage({
           method: 'POST',
           body: postData,
         });
-        if (res.ok) {
+        if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
           newCourse = await res.json();
         }
       } catch (e) {
